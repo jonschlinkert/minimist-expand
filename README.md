@@ -71,7 +71,7 @@ See the [working example](./examples/events.js).
 
 ## Use as a plugin
 
-Use as a plugin with [minimist-plugins]:
+Use as a plugin with [minimist-plugins](https://github.com/jonschlinkert/minimist-plugins):
 
 ```js
 var minimist = require('minimist');
