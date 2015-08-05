@@ -5,7 +5,7 @@
 **Example**
 
 * minimist parses `--set=a:b` to `{ _: [], set: 'a:b' }`
-* minimist-expand then expands `a:b` to `{a: 'b'}`
+* minimist-expand then uses [expand-object](https://github.com/jonschlinkert/expand-object)to convert `a:b` to `{a: 'b'}`
 
 ```js
 var argv = require('minimist');
@@ -38,7 +38,7 @@ expand(argv);
 
 **Examples**
 
-Expand object values:
+Values are expanded by [expand-object](https://github.com/jonschlinkert/expand-object):
 
 ```js
 // '--foo=a.b.c:d'
