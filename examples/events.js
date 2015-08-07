@@ -16,4 +16,4 @@ cli.on('baz', function (val) {
   console.log('baz =>', val);
 });
 
-cli.parse(['--foo=a.b.c:d', '--bar=f:g', '--baz=h:i,j,k'])
+cli(['--foo=a.b.c:d', '--bar=f:g', '--baz=h:i,j,k'])
