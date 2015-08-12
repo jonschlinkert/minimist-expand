@@ -26,11 +26,12 @@ describe('expand', function () {
 
   it('should expand object args:', function () {
     expand(['a:b']).should.eql({_: [], a: 'b'});
+    expand(['a:b', 'c']).should.eql({_: ['c'], a: 'b'});
   });
 });
 
 describe('_', function () {
-  it('should ignore non-opts that have string values:', function () {
+  it('should pass-through non-opts that have string values:', function () {
     expand(['a', 'b']).should.eql({_: ['a', 'b']});
   });
 });
