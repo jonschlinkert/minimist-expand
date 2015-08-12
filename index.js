@@ -17,22 +17,16 @@ module.exports = function minimistExpand(minimist) {
   }
 
   // otherwise, expect minimist to be a function
-  var fn = minimist;
-  if (typeof fn !== 'function') {
+  if (typeof minimist !== 'function') {
     throw new TypeError('expected minimist to be a function.');
   }
 
-  // if this is already registered as a plugin, return minimist
-  fn.plugin = fn.plugin || {};
-  if (fn.plugin.expand) {
-    return fn;
-  }
-
   function proxy() {
-    return expandArgs(fn.apply(fn, arguments));
+    var argv = minimist.apply(minimist, arguments);
+    argv = expandArgs(argv);
+    return argv;
   }
 
-  forward(proxy, fn);
-  proxy.plugin.expand = true;
+  forward(proxy, minimist);
   return proxy;
 };
