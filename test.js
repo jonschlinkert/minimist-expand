@@ -11,27 +11,57 @@
 var assert = require('assert');
 var should = require('should');
 var minimist = require('minimist');
-var expand = require('./')(minimist);
+var plugins = require('minimist-plugins');
+var expand = require('./');
+var cli;
 
 describe('expand', function () {
-  it('should expand args to object values:', function () {
-    expand(['--set=a:b']).should.eql({_: [], set: {a: 'b'}});
-    expand(['--set=a.b.c:d']).should.eql({_: [], set: {a: {b: {c: 'd'}}}});
+  beforeEach(function () {
+    cli = plugins(minimist);
   });
 
-  it('should expand args to array values:', function () {
-    expand(['--set=a:b,c:d']).should.eql({_: [], set: [{a: 'b'}, {c: 'd'}]});
-    expand(['--set=a.b.c:d,e,f']).should.eql({_: [], set: {a: {b: {c: ['d', 'e', 'f']}}}});
+  it('should expand args to object values:', function (done) {
+    cli.use(expand);
+
+    cli.parse(['--set=a:b'], function (err, res) {
+      res.should.eql({_: [], set: {a: 'b'}});
+    });
+
+    cli.parse(['--set=a.b.c:d'], function (err, res) {
+      res.should.eql({_: [], set: {a: {b: {c: 'd'}}}});
+      done();
+    });
   });
 
-  it('should expand object args:', function () {
-    expand(['a:b']).should.eql({_: [], a: 'b'});
-    expand(['a:b', 'c']).should.eql({_: ['c'], a: 'b'});
+  it('should expand args to array values:', function (done) {
+    cli.use(expand);
+    cli.parse(['--set=a:b,c:d'], function (err, res) {
+      res.should.eql({_: [], set: [{a: 'b'}, {c: 'd'}]});
+    });
+    cli.parse(['--set=a.b.c:d,e,f'], function (err, res) {
+      res.should.eql({_: [], set: {a: {b: {c: ['d', 'e', 'f']}}}});
+      done();
+    });;
+  });
+
+  it('should expand object args:', function (done) {
+    cli.use(expand);
+    cli.parse(['a:b'], function (err, res) {
+      res.should.eql({_: [], a: 'b'});
+    });
+    cli.parse(['a:b', 'c'], function (err, res) {
+      res.should.eql({_: ['c'], a: 'b'});
+      done();
+    });
   });
 });
 
 describe('_', function () {
-  it('should pass-through non-opts that have string values:', function () {
-    expand(['a', 'b']).should.eql({_: ['a', 'b']});
+  it('should pass-through non-opts that have string values:', function (done) {
+    cli.use(expand);
+    cli.parse(['a', 'b'], function (err, res) {
+      res.should.eql({ _: [ 'a', 'b' ] });
+      done();
+    })
   });
 });

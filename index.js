@@ -8,25 +8,11 @@
 'use strict';
 
 var expandArgs = require('expand-args');
-var forward = require('forward-object');
 
-module.exports = function minimistExpand(minimist) {
-  // allow args to be passed directly
-  if (typeof minimist === 'object') {
-    return expandArgs(minimist);
-  }
-
-  // otherwise, expect minimist to be a function
-  if (typeof minimist !== 'function') {
-    throw new TypeError('expected minimist to be a function.');
-  }
-
-  function proxy() {
-    var argv = minimist.apply(minimist, arguments);
+module.exports = function expandPlugin(cli) {
+  return function (argv, next) {
     argv = expandArgs(argv);
-    return argv;
-  }
-
-  forward(proxy, minimist);
-  return proxy;
+    argv._ = argv._ || [];
+    next(null, argv);
+  };
 };
