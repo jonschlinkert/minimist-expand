@@ -47,6 +47,29 @@ cli.parse(process.argv.slice(2), function (err, res) {
 });
 ```
 
+## Events
+
+When used with [minimist-events](https://github.com/jonschlinkert/minimist-events), call this plugin first so that events are emitted for all keys in the resulting object:
+
+```js
+var minimist = require('minimist');
+var plugins = require('minimist-plugins');
+
+var cli = plugins(mimimist)
+  .use(require('minimist-expand'))
+  .use(require('minimist-events')());
+
+cli.on('set', function (val) {
+  console.log('set =>', val);
+  //=> {a: 'b'}
+});
+
+// '$ --set=a:b'
+cli.parse(process.argv.slice(2), function (err, res) {
+  //=> {_: [], set: {a: 'b'}}
+});
+```
+
 ## Related projects
 
 * [expand-args](https://github.com/jonschlinkert/expand-args): Expand parsed command line arguments using expand-object.
