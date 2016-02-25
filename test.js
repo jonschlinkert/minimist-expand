@@ -21,7 +21,7 @@ describe('expand', function() {
   });
 
   it('should expand args to object values:', function(cb) {
-    cli.use(expand);
+    cli.use(expand());
 
     // silly I know...
     cli.parse(['--set=a.b.c:d'], function(err, res) {
@@ -39,7 +39,7 @@ describe('expand', function() {
   });
 
   it('should expand args to array values:', function(cb) {
-    cli.use(expand);
+    cli.use(expand());
     cli.parse(['--set=a.b.c:d,e,f'], function(err, res) {
       res.should.eql({_: [], set: {a: {b: {c: ['d', 'e', 'f']}}}});
       cb();
@@ -47,7 +47,7 @@ describe('expand', function() {
   });
 
   it('should expand object args:', function(cb) {
-    cli.use(expand);
+    cli.use(expand());
     cli.parse(['a:b'], function(err, res) {
       res.should.eql({a: 'b', _: []});
 
@@ -61,7 +61,7 @@ describe('expand', function() {
 
 describe('_', function() {
   it('should pass-through non-opts that have string values:', function(cb) {
-    cli.use(expand);
+    cli.use(expand());
     cli.parse(['a', 'b'], function(err, res) {
       res.should.eql({ _: [ 'a', 'b' ] });
       cb();
