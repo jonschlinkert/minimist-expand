@@ -10,7 +10,7 @@
 var expandArgs = require('expand-args');
 
 module.exports = function expandPlugin(cli) {
-  return function (argv, next) {
+  return function(argv, next) {
     argv = expandArgs(argv);
     argv._ = argv._ || [];
     next(null, argv);
