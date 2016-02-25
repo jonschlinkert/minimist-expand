@@ -1,7 +1,7 @@
 {
   "name": "minimist-expand",
   "description": "Expand minimist args with expand-object.",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "homepage": "https://github.com/jonschlinkert/minimist-expand",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/minimist-expand",
@@ -20,9 +20,10 @@
     "test": "mocha"
   },
   "dependencies": {
-    "expand-args": "^0.2.1"
+    "expand-args": "^0.3.6"
   },
   "devDependencies": {
+    "gulp-format-md": "^0.1.7",
     "minimist": "^1.1.2",
     "minimist-events": "^0.3.0",
     "minimist-plugins": "^0.3.1",
@@ -49,6 +50,15 @@
     "parser"
   ],
   "verb": {
+    "run": true,
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
     "related": {
       "list": [
         "expand-args",
@@ -57,6 +67,14 @@
         "minimist-events",
         "minimist-plugins"
       ]
+    },
+    "reflinks": [
+      "verb",
+      "minimist-plugins",
+      "minimist-events"
+    ],
+    "lint": {
+      "reflinks": true
     }
   }
 }
